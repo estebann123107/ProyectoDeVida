@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Proyecto de Vida - Esteban Meléndez</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .slide.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Slide 1: Portada */
+        .slide-cover {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .slide-cover::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://img.freepik.com/premium-photo/embracing-sunrise-successful-woman-stands-mountain-peak-concept-natural-beauty-personal-growth-success-mountain-views-sunrise-glow_918839-139333.jpg') center/cover;
+            opacity: 0.15;
+            filter: blur(2px);
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+        }
+
+        .cover-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            color: #e94560;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            animation: slideDown 1.2s ease-out;
+        }
+
+        .cover-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #fff, #e94560, #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite, slideUp 1s ease-out;
+        }
+
+        .cover-info {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            margin-bottom: 0.5rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .cover-tag {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 2rem;
+            border: 2px solid #e94560;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(233, 69, 96, 0); }
+        }
+
+        /* Content Slides Layout */
+        .content-slide {
+            display: flex;
+        }
+
+        .slide-image {
+            width: 45%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .slide-image::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to right, transparent 0%, #0a0a0a 100%);
+        }
+
+        .slide-text {
+            width: 55%;
+            padding: 4rem 5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #0a0a0a;
+        }
+
+        .slide-number {
+            font-size: 6rem;
+            font-weight: 800;
+            color: rgba(233, 69, 96, 0.1);
+            line-height: 1;
+            margin-bottom: -1rem;
+        }
+
+        .slide-label {
+            color: #e94560;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .slide-points {
+            list-style: none;
+        }
+
+        .slide-points li {
+            padding: 1rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #d0d0d0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .slide-points li:hover {
+            color: #fff;
+            padding-left: 2.5rem;
+        }
+
+        .slide-points li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #e94560;
+            font-weight: bold;
+        }
+
+        .highlight {
+            color: #e94560;
+            font-weight: 600;
+        }
+
+        /* Personal Slide - Warm tones */
+        .personal .slide-image::after {
+            background: linear-gradient(to right, rgba(26,26,46,0.3) 0%, #0a0a0a 100%);
+        }
+
+        /* Academic Slide - Cool tech */
+        .academic .slide-image::after {
+            background: linear-gradient(to right, rgba(15,52,96,0.3) 0%, #0a0a0a 100%);
+        }
+
+        /* Family Slide - Golden */
+        .family .slide-image::after {
+            background: linear-gradient(to right, rgba(233,69,96,0.2) 0%, #0a0a0a 100%);
+        }
+
+        /* Work Slide - Professional */
+        .work .slide-image::after {
+            background: linear-gradient(to right, rgba(22,33,62,0.4) 0%, #0a0a0a 100%);
+        }
+
+        /* Final Slide */
+        .slide-final {
+            background: #0a0a0a;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .slide-final::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://w0.peakpx.com/wallpaper/148/221/HD-wallpaper-loading-future-text-black-minimalism-thumbnail.jpg') center/cover;
+            opacity: 0.2;
+        }
+
+        .final-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .final-thanks {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #fff, #e94560);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .final-loading {
+            font-size: 1.5rem;
+            color: #a0a0a0;
+            letter-spacing: 5px;
+            margin-bottom: 3rem;
+        }
+
+        .loading-bar {
+            width: 300px;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            margin: 0 auto 2rem;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+            border-radius: 2px;
+            animation: load 3s ease-in-out infinite;
+        }
+
+        @keyframes load {
+            0% { width: 0%; }
+            50% { width: 75%; }
+            100% { width: 100%; }
+        }
+
+        .final-signature {
+            font-size: 1.2rem;
+            color: #e94560;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        /* Navigation */
+        .nav-dots {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-dot.active {
+            background: #e94560;
+            transform: scale(1.3);
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
+        }
+
+        .nav-dot:hover {
+            background: #fff;
+        }
+
+        .nav-arrows {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .arrow {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .arrow:hover {
+            background: #e94560;
+            border-color: #e94560;
+            transform: scale(1.1);
+        }
+
+        .slide-counter {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+            letter-spacing: 2px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-slide { flex-direction: column; }
+            .slide-image { width: 100%; height: 40vh; }
+            .slide-image::after { background: linear-gradient(to bottom, transparent 0%, #0a0a0a 100%) !important; }
+            .slide-text { width: 100%; padding: 2rem; }
+            .slide-title { font-size: 2rem; }
+            .cover-title { font-size: 2.5rem; }
+            .nav-dots { right: 1rem; }
+        }
+
+        /* Particle effect */
+        .particles {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(233, 69, 96, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Cover -->
+    <div class="slide slide-cover active" data-index="0">
+        <div class="particles" id="particles"></div>
+        <div class="cover-content">
+            <div class="cover-subtitle">Ingeniería Existencial</div>
+            <h1 class="cover-title">MI PROYECTO DE VIDA</h1>
+            <div class="cover-info">Esteban Meléndez | Ingeniería de Sistemas</div>
+            <div class="cover-tag">Descubre mi camino</div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Personal -->
+    <div class="slide content-slide personal" data-index="1">
+        <div class="slide-image">
+            <img src="https://img.freepik.com/premium-photo/embracing-sunrise-successful-woman-stands-mountain-peak-concept-natural-beauty-personal-growth-success-mountain-views-sunrise-glow_918839-139333.jpg" alt="Crecimiento personal">
+        </div>
+        <div class="slide-text">
+            <div class="slide-number">01</div>
+            <div class="slide-label">Ámbito Personal</div>
+            <h2 class="slide-title">Superación<br>Constante</h2>
+            <ul class="slide-points">
+                <li>Deseo de <span class="highlight">superación diaria</span> y crecimiento emocional continuo</li>
+                <li>Convicción firme: <span class="highlight">"El límite lo pone uno mismo"</span></li>
+                <li>Apoyos fundamentales: <span class="highlight">Familia, amigos y mascotas</span> como pilar emocional</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 3: Academic -->
+    <div class="slide content-slide academic" data-index="2">
+        <div class="slide-image">
+            <img src="https://img.freepik.com/free-photo/laptop-with-glowing-screen-table-dark-top-view-copy-space_169016-51607.jpg?semt=ais_hybrid&w=740&q=80" alt="Estudiante de ingeniería">
+        </div>
+        <div class="slide-text">
+            <div class="slide-number">02</div>
+            <div class="slide-label">Ámbito Académico</div>
+            <h2 class="slide-title">Excelencia<br>Profesional</h2>
+            <ul class="slide-points">
+                <li>Meta clara: <span class="highlight">Culminar ingeniería a los 21 años</span></li>
+                <li>Estrategia basada en <span class="highlight">responsabilidad y constancia</span> diaria</li>
+                <li>Objetivo final: <span class="highlight">Destacar en el mercado laboral</span> con solidez técnica</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 4: Family -->
+    <div class="slide content-slide family" data-index="3">
+        <div class="slide-image">
+            <img src="https://www.shutterstock.com/image-photo/family-moments-embracing-togetherness-warm-260nw-2576995183.jpg" alt="Familia unida">
+        </div>
+        <div class="slide-text">
+            <div class="slide-number">03</div>
+            <div class="slide-label">Ámbito Familiar</div>
+            <h2 class="slide-title">Unión y<br>Amor Real</h2>
+            <ul class="slide-points">
+                <li>Enfoque en <span class="highlight">unión, empatía y amor real</span> como valores centrales</li>
+                <li>Horizonte temporal: <span class="highlight">Indeterminado</span>, con mejora constante cada día</li>
+                <li>Convicción absoluta: <span class="highlight">"La familia es lo más importante"</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 5: Work -->
+    <div class="slide content-slide work" data-index="4">
+        <div class="slide-image">
+            <img src="https://imageio.forbes.com/specials-images/imageserve/6867f9a04de8515f3a32df0d/Portrait-of-a-Cheerful-Beautiful-Young-Woman-Having-an-Online-Meeting-on-Her-Laptop/0x0.jpg?format=jpg&width=480" alt="Emprendedor digital">
+        </div>
+        <div class="slide-text">
+            <div class="slide-number">04</div>
+            <div class="slide-label">Ámbito Laboral</div>
+            <h2 class="slide-title">Emprendimiento<br>Global</h2>
+            <ul class="slide-points">
+                <li>Objetivo ambicioso: <span class="highlight">Empresa propia antes de los 30 años</span></li>
+                <li>Visión de libertad: <span class="highlight">Trabajar desde distintas partes del mundo</span></li>
+                <li>Estrategia clave: <span class="highlight">Perder el miedo al fracaso</span> y abrazar el riesgo</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 6: Final -->
+    <div class="slide slide-final" data-index="5">
+        <div class="final-content">
+            <h2 class="final-thanks">¡GRACIAS!</h2>
+            <div class="final-loading">FUTURE IS LOADING...</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <div class="final-signature">Steve M</div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-dots">
+        <div class="nav-dot active" onclick="goToSlide(0)"></div>
+        <div class="nav-dot" onclick="goToSlide(1)"></div>
+        <div class="nav-dot" onclick="goToSlide(2)"></div>
+        <div class="nav-dot" onclick="goToSlide(3)"></div>
+        <div class="nav-dot" onclick="goToSlide(4)"></div>
+        <div class="nav-dot" onclick="goToSlide(5)"></div>
+    </div>
+
+    <div class="nav-arrows">
+        <button class="arrow" onclick="prevSlide()">‹</button>
+        <span class="slide-counter"><span id="current">1</span> / 6</span>
+        <button class="arrow" onclick="nextSlide()">›</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        const currentSpan = document.getElementById('current');
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSpan.textContent = index + 1;
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) nextSlide();
+            if (touchEndX - touchStartX > 50) prevSlide();
+        });
+
+        // Create particles for cover slide
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Auto-play (optional, stops on interaction)
+        let autoPlay = setInterval(nextSlide, 8000);
+        document.addEventListener('click', () => clearInterval(autoPlay));
+        document.addEventListener('keydown', () => clearInterval(autoPlay));
+    </script>
+</body>
+</html>
